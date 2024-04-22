@@ -1,0 +1,22 @@
+
+services:
+  server:
+    build:
+      context: .
+      target: dev
+    ports:
+      - 3000:3000
+      - 9229:9229
+    environment:
+      NODE_ENV: development
+      #POSTGRES_HOST: db
+      #POSTGRES_USER: postgres
+      #POSTGRES_PASSWORD_FILE: /run/secrets/db-password
+      #POSTGRES_DB: example
+    #depends_on:
+    #  db:
+    #    condition: service_healthy
+    #secrets:
+    #  - db-password
+    volumes:
+      - ./src:/usr/src/app/src
