@@ -20,3 +20,4 @@ services:
     #  - db-password
     volumes:
       - ./src:/usr/src/app/src
+      - ./dist:/usr/src/app/dist

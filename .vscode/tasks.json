@@ -1,0 +1,30 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "type": "shell",
+        "command":"docker compose -f compose.dev.yaml up",
+        "label": "docker-compose-up",
+        "isBackground": true,
+        "problemMatcher": [{
+          "pattern": [{
+            "regexp": ".",
+            "file": 1,"line": 1,
+            "column": 1,"message": 1
+          }],
+          "background": {
+              "activeOnStart": true,
+              "beginsPattern": { "regexp": "." },
+              "endsPattern": { "regexp": "." }
+          },
+        }]
+      },
+      {
+        "type": "shell",
+        "command":"docker compose down",
+        "label": "docker-compose-down"
+      }
+    ]
+  }

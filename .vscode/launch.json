@@ -1,8 +1,9 @@
 {
     "version": "0.2.0",
     "configurations": [
+      
       {
-        "name": "Docker: Attach to Node",
+        "name": "Docker: Attach to Node JS",
         "type": "node",
         "request": "attach",
         "restart": true,
@@ -11,6 +12,33 @@
         "localRoot": "${workspaceFolder}",
         "remoteRoot": "/usr/src/app",
         "protocol": "inspector"
+      },
+      {
+        "name": "Docker: Attach to Node TS",
+        "type": "node",
+        "request": "attach",
+        "restart": true,
+        "port": 9229,
+        "address": "localhost",
+        "localRoot": "${workspaceFolder}",
+        "remoteRoot": "/usr/src/app", // Note that this is the same location from docker-compose
+        "protocol": "inspector",
+        "sourceMaps": true
+      },
+      {
+        "name": "Docker: Run and Debug Node TS",
+        "type": "node",
+        "request": "attach",
+        "restart": true,
+        "port": 9229,
+        "address": "localhost",
+        "localRoot": "${workspaceFolder}",
+        "remoteRoot": "/usr/src/app", // Note that this is the same location from docker-compose
+        "protocol": "inspector",
+        "sourceMaps": true,
+        "preLaunchTask": "docker-compose-up",
+        "postDebugTask": "docker-compose-down",
+        "timeout": 30000
       }
     ]
   }
