@@ -23,7 +23,7 @@
       },
       {
         "type": "shell",
-        "command":"docker compose down",
+        "command":"docker compose down --rmi local",
         "label": "docker-compose-down"
       }
     ]

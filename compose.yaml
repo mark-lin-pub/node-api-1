@@ -11,7 +11,7 @@ services:
   server:
     build:
       context: .
-      target: production
+      target: run
     environment:
       NODE_ENV: production
     ports:
