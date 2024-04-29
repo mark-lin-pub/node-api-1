@@ -34,3 +34,6 @@
 LICENSE
 README.md
 README.Docker.md
+# local secrets and variables
+**/*-secret.txt
+**/.env.*
