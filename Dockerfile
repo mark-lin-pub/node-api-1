@@ -83,4 +83,4 @@ COPY --from=build /usr/src/app/dist dist
 # Expose the port that the application listens on.
 EXPOSE ${PORT}
 # Run the application.
-CMD node src/server.js
+CMD node dist/app.js
