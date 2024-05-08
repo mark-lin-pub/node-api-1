@@ -11,11 +11,19 @@ services:
   server:
     build:
       context: .
-      target: production
+      target: run
+    env_file:
+      - .config/variables/.env.local
     environment:
       NODE_ENV: production
+      DB_PASSWORD: /run/secrets/db-password
+    secrets:
+      - db-password
     ports:
       - 3000:3000
+secrets:
+  db-password:
+    file: .config/secrets/db-password-secret.txt
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

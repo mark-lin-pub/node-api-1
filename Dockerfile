@@ -12,14 +12,15 @@ ARG NODE_VERSION=20.12.2
 FROM node:${NODE_VERSION}-alpine as base
 
 WORKDIR /usr/src/app
-# Use this HTTP PORT
-ENV PORT 3000
+
+
 
 FROM base as dev
 
 # Use production node environment by default.
-ENV NODE_ENV development
-
+#ENV NODE_ENV development
+# Use this HTTP PORT
+ENV PORT 3000
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.npm to speed up subsequent builds.
@@ -41,10 +42,28 @@ EXPOSE ${PORT}
 
 CMD npm run dev
 
-FROM base as prod
+FROM base as build
+
+# Download dependencies as a separate step to take advantage of Docker's caching.
+# Leverage a cache mount to /root/.npm to speed up subsequent builds.
+# Leverage a bind mounts to package.json and package-lock.json to avoid having to copy them into
+# into this layer.
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=cache,target=/root/.npm \
+    npm ci --include=dev
+
+COPY . .
+
+RUN npm run build
+
+
+FROM base as run
 
 # Use production node environment by default.
-ENV NODE_ENV production
+#ENV NODE_ENV production
+# Use this HTTP PORT
+ENV PORT 3000
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.npm to speed up subsequent builds.
@@ -58,10 +77,10 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 # Run the application as a non-root user.
 USER node
 
-# Copy the rest of the source files into the image.
-COPY . .
+# Copy build directory
+COPY --from=build /usr/src/app/dist dist
 
 # Expose the port that the application listens on.
 EXPOSE ${PORT}
 # Run the application.
-CMD node src/server.js
+CMD node dist/app.js

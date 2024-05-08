@@ -7,16 +7,19 @@ services:
     ports:
       - 3000:3000
       - 9229:9229
+    env_file:
+      - .config/variables/.env.development.local
     environment:
       NODE_ENV: development
-      #POSTGRES_HOST: db
-      #POSTGRES_USER: postgres
-      #POSTGRES_PASSWORD_FILE: /run/secrets/db-password
-      #POSTGRES_DB: example
+      DB_PASSWORD: /run/secrets/db-password
+    secrets:
+      - db-password
     #depends_on:
     #  db:
     #    condition: service_healthy
-    #secrets:
-    #  - db-password
     volumes:
       - ./src:/usr/src/app/src
+      - ./dist:/usr/src/app/dist
+secrets:
+  db-password:
+    file: .config/secrets/db-password-secret.txt

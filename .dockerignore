@@ -30,6 +30,10 @@
 **/values.dev.yaml
 **/build
 **/dist
+**/compose.*.y*ml
 LICENSE
 README.md
 README.Docker.md
+# local secrets and variables
+**/*-secret.txt
+**/.env.*
