@@ -6,16 +6,16 @@
 
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
-ARG NODE_VERSION=20.12.2
+ARG NODE_VERSION=20.15.0
 
 
-FROM node:${NODE_VERSION}-alpine as base
+FROM node:${NODE_VERSION}-alpine AS base
 
 WORKDIR /usr/src/app
 
 
 
-FROM base as dev
+FROM base AS dev
 
 # Use production node environment by default.
 #ENV NODE_ENV development
@@ -42,7 +42,7 @@ EXPOSE ${PORT}
 
 CMD npm run dev
 
-FROM base as build
+FROM base AS build
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.npm to speed up subsequent builds.
@@ -58,7 +58,7 @@ COPY . .
 RUN npm run build
 
 
-FROM base as run
+FROM base AS run
 
 # Use production node environment by default.
 #ENV NODE_ENV production
