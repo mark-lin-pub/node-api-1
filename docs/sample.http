@@ -1,9 +1,12 @@
 
 ### First get
 GET http://localhost:3000 HTTP/1.1
+Origin: http://localhost:3000
+Accept: application/json
 
-### Get books
-GET http://localhost:3000/books HTTP/1.1
+### Get errors
+GET http://localhost:3000/error HTTP/1.1
+Accept: application/json
 
 ### Create a book
 POST http://localhost:3000/books HTTP/1.1
